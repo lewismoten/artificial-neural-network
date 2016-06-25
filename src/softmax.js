@@ -13,6 +13,12 @@
   */
   function softmax(values) {
 
+    values.map(checkValue);
+
+    if(values.length === 1) {
+      return [1];
+    }
+
     var exponents = values.map(Math.exp);
     var total = exponents.reduce(sum, 0);
     return exponents.map(divide, total);
@@ -40,6 +46,33 @@
   function divide(dividend) {
 
     return dividend / this;
+
+  }
+
+  /*
+  Checks the value to determine if it is valid
+  @param {*} [value] The value
+  @throws {InvalidArgumentException} The value must be a number in-range
+  */
+  function checkValue(value) {
+
+    var message = "softmax only accepts numbers above -Number.MAX_VALUE and below Number.MAX_VALUE";
+
+    if (typeof value !== "number") {
+
+      throw message;
+
+    }
+
+    switch (value) {
+
+      case Infinity:
+      case -Infinity:
+      case Number.MAX_VALUE:
+      case -Number.MAX_VALUE:
+        throw message;
+
+    }
 
   }
 

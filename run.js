@@ -1,7 +1,7 @@
 var sigmoid = require('./lib/sigmoid.js');
 var heavsideStep = require('./lib/heavside-step.js');
 var hyperbolicTangent = require('./lib/hyperbolic-tangent.js');
-var softmax = require('./lib/softmax.js');
+var softmax = require('softmax-fn');// require('./lib/softmax.js');
 
 var vv = process.argv.slice(2).map(function(n) { return Number(n);});
 var v = vv[0] || 0;

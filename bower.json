@@ -1,0 +1,25 @@
+{
+  "name": "golden-combat-park",
+  "description": "Genetic Algorithm",
+  "main": "dist/index.js",
+  "authors": [
+    "Lewis Edward Moten III"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "genetic algorithm",
+    "ai",
+    "artificial intellegence"
+  ],
+  "homepage": "https://github.com/lewismoten/golden-combat-park#readme",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "spec"
+  ]
+}

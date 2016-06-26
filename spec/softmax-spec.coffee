@@ -1,4 +1,4 @@
-softmax = require("../src/softmax")
+softmax = require("../lib/softmax")
 
 describe "softmax", ->
   it "is empty for empty", ->

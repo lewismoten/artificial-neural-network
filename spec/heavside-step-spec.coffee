@@ -1,4 +1,4 @@
-heavsideStep = require("../src/heavside-step")
+heavsideStep = require("../lib/heavside-step")
 
 describe "heavside step", ->
   it "is 0 for negative values", ->

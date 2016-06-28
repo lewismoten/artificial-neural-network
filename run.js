@@ -3,7 +3,7 @@ var sigmoid = require('sigmoid');
 var htan = require('htan');
 var softmax = require('softmax-fn');
 var heaviside = require('heaviside');
-var getNeuron = require('./lib/neuron');
+var getNeuron = require('./lib/create');
 
 var reader = require('./lib/reader');
 var writer = require('./lib/writer');

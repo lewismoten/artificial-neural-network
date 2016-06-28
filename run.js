@@ -5,6 +5,11 @@ var softmax = require('softmax-fn');
 var heaviside = require('heaviside');
 var getNeuron = require('./lib/neuron');
 
+var reader = require('./lib/neuron-reader');
+var writer = require('./lib/neuron-writer');
+
+
+
 var vv = process.argv.slice(2).map(function(n) { return Number(n);});
 var v = vv[0] || 0;
 
@@ -19,4 +24,8 @@ var v = vv[0] || 0;
 
 //console.log(sigmoid(v));
 var n = getNeuron(3,4,2);
-console.log(JSON.stringify(n));
+var n2 = getNeuron(3,4,2);
+
+writer(n2, reader(n));
+
+console.log('neurons match?', JSON.stringify(n) == JSON.stringify(n2));

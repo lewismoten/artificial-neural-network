@@ -5,9 +5,9 @@ var softmax = require('softmax-fn');
 var heaviside = require('heaviside');
 var getNeuron = require('./lib/neuron');
 
-var reader = require('./lib/neuron-reader');
-var writer = require('./lib/neuron-writer');
-var runner = require('./lib/algorithm-runner');
+var reader = require('./lib/reader');
+var writer = require('./lib/writer');
+var runner = require('./lib/runner');
 
 
 

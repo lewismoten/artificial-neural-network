@@ -31,8 +31,7 @@ writer(n2, reader(n));
 
 //console.log('neurons match?', JSON.stringify(n) == JSON.stringify(n2));
 
-n.input.values = [1,2,3];
-runner(n);
+n[0].values = [1,2,3];
 
-console.log(JSON.stringify(n, null, ' '));
-console.log('result', JSON.stringify(n.output.values));
+//console.log(JSON.stringify(n, null, ' '));
+console.log('result', JSON.stringify(runner(n)));

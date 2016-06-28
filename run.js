@@ -19,4 +19,4 @@ var v = vv[0] || 0;
 
 //console.log(sigmoid(v));
 var n = getNeuron(3,4,2);
-console.log(n.toString());
+console.log(JSON.stringify(n));

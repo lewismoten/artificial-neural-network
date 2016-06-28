@@ -7,6 +7,7 @@ var getNeuron = require('./lib/neuron');
 
 var reader = require('./lib/neuron-reader');
 var writer = require('./lib/neuron-writer');
+var runner = require('./lib/algorithm-runner');
 
 
 
@@ -28,4 +29,10 @@ var n2 = getNeuron(3,4,2);
 
 writer(n2, reader(n));
 
-console.log('neurons match?', JSON.stringify(n) == JSON.stringify(n2));
+//console.log('neurons match?', JSON.stringify(n) == JSON.stringify(n2));
+
+n.input.values = [1,2,3];
+runner(n);
+
+console.log(JSON.stringify(n, null, ' '));
+console.log('result', JSON.stringify(n.output.values));

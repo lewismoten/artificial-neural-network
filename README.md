@@ -93,6 +93,6 @@ A layer represents ... a layer. Each node within the layer has a weight that is 
 - values: Represents the values coming into the layer.
 - weights: A weight to be applied to the next layers value. Each value has a weight applied to each of the next layers values. The last layer does not use weights.
 - biases: A bias applied to the incoming values before weights are applied. The first layer does not use biases.
-- activation: The function applied to each value in the next layer after the bias and weights are applied.
+- activation: The function applied to each value in the layer after the previous layer has applied its bias and weights. (The first layer does not get activated.)
   - softmax: The softmax function is applied to all values as a whole. (Typically for the last layer.)
   - htan: The Hyperbolic Tangent is applied to each individual value. (Typically for all layers except the last)

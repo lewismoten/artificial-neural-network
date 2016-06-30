@@ -1,10 +1,22 @@
 
 const lib = require('./lib');
-let n = lib.create(2, 3, 2),
-  v;
+let network = lib.create(2, 3, 2),
+  output,
+  output2,
+  dna,
+  copy,
+  input = [3.2, 1 / 3];
 
-n[0].values = [3.2, 1 / 3];
-v = lib.runner(n);
+network[0].values = input;
+output = lib.runner(network);
 
-console.log(JSON.stringify(n, null, ' '));
-console.log('result', JSON.stringify(v));
+dna = lib.reader(network);
+copy = lib.create(2, 3, 2);
+copy[0].values = input;
+lib.writer(copy, dna);
+output2 = lib.runner(copy);
+
+console.log(JSON.stringify(network, null, ' '));
+console.log('result', JSON.stringify(output));
+
+console.log('same copy', output.join(',') === output2.join(','))

@@ -14,20 +14,19 @@ The result is either 0 or 1.
 */
 const lib = require('../lib');
 
-let and = lib.create(2, 1);
+let or = lib.create(2, 1);
 
-and[0].weights = [
+or[0].weights = [
   [1],
   [1]
 ];
-and[1].biases = [-1];
-and[1].activate = 'heaviside';
+or[1].biases = [-1];
+or[1].activate = 'heaviside';
 
 for (let x = 0; x < 2; x++) {
 
   for (let y = 0; y < 2; y++) {
 
-    and[0].values = [x, y];
     let result = lib.runner(and)[0];
     console.log(`${x} OR ${y} = ${result}`, test(x, y, result));
 

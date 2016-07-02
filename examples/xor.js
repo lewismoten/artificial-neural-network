@@ -35,8 +35,15 @@ for (let x = 0; x < 2; x++) {
 
     xor[0].values = [x, y];
     let result = lib.runner(xor)[0];
-    console.log(`${x} XOR ${y} = ${result}`);
+    console.log(`${x} XOR ${y} = ${result}`, test(x, y, result));
 
   }
+
+}
+
+
+function test(x, y, result) {
+
+  return result === (x ^ y) ? 'PASS' : 'FAIL';
 
 }

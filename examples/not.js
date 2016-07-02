@@ -24,6 +24,12 @@ for (let x = 0; x < 2; x++) {
 
     and[0].values = [x];
     let result = lib.runner(and)[0];
-    console.log(`NOT ${x} = ${result}`);
+    console.log(`NOT ${x} = ${result}`, test(x, result));
+
+}
+
+function test(x, result) {
+
+  return (result !== x && (result === 1 || result === 0)) ? 'PASS' : 'FAIL';
 
 }

@@ -29,8 +29,14 @@ for (let x = 0; x < 2; x++) {
 
     and[0].values = [x, y];
     let result = lib.runner(and)[0];
-    console.log(`${x} OR ${y} = ${result}`);
+    console.log(`${x} OR ${y} = ${result}`, test(x, y, result));
 
   }
+
+}
+
+function test(x, y, result) {
+
+  return result === (x | y) ? 'PASS' : 'FAIL';
 
 }

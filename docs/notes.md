@@ -95,6 +95,8 @@ You will first need to map your data for the input values. Each neuron can accep
 
 [Improving how Neural Networks Learn](http://neuralnetworksanddeeplearning.com/chap3.html)
 
+[Perceptron 3: learning](http://toritris.weebly.com/perceptron-3-learning.html)
+
 # R&D - look later?
 
 - Expected Output -> Error Calculation -> Error back propagation

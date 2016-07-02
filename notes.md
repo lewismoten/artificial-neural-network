@@ -20,6 +20,7 @@
 | Feed Forward Network | Logic moves forward, one layer to the next |
 | Recurrent Network | Neurons go back to previous layers. Adds state/memory. |
 | Symmetric Network | No import/outputs, can go forward or backwards (same weights). |
+| Multi-layer Perceptrons | See Neural Network |
 | Input Layer | A collection of inputs. The first layer in a network. |
 | Output Layer | A collection of outputs. The final layer in a network. |
 | Hidden Layer | A layer that is not seen externally from outside of the network. |
@@ -59,6 +60,8 @@ In simple terms, the output of a neuron is the weighted sum of its inputs.
 - Linear threshold
 - Sigmoid Logistic
 - Hyperbolic tangent (htan)
+- Gaussian
+- cubic funciton?
 
 ## How to use a network
 

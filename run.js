@@ -16,17 +16,9 @@ xor[2].biases = [-3];
 xor[1].activate = 'htan';
 xor[2].activate = 'heaviside';
 
-for (let x = 0; x < 2; x++) {
-
-  for (let y = 0; y < 2; y++) {
-
-    xor[0].values = [x, y];
-    let result = lib.runner(xor)[0];
-    console.log(`${x} ^ ${y} = ${result}`);
-
-  }
-
-}
+xor[0].values = [1, 1];
+let result = lib.runner(xor)[0];
+lib.learn(xor, [1]);
 
 // console.log(JSON.stringify(network, null, ' '));
 // console.log('result', JSON.stringify(output));

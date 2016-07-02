@@ -116,6 +116,8 @@ You will first need to map your data for the input values. Each neuron can accep
 - Fuzzy Logic
 - conciousness
 - Refactory period - impossible to receive/transmit signal
+- neocortex - six layers?
+- most complex math - two layers (in, hidden, out)
 
 # Things that could affect processing
 - Does a neuron fire immediately when the threshold is met?

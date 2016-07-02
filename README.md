@@ -15,7 +15,7 @@ let algorithm = create(4, 5, 3);
 
 Must provide at least 3 size parameters for an input, hidden, and output layer.
 
-You may create multiple hidden layers by providing more sizes. `create(4, 5, 5, 3)`
+You may create deep networks (multiple hidden layers) by providing more sizes. `create(4, 5, 5, 3)`
 
 Initial weights and bias will be pre-populated.
 
@@ -97,4 +97,4 @@ A layer represents ... a layer. Each node within the layer has a weight that is 
   - htan: The Hyperbolic Tangent is applied to each individual value. (Typically for all layers except the last)
   - heaviside: Applied to individual values.
   - sigmoide: Applied to individual values.
-  - [empty]: No threshold is applied. 
+  - [empty]: No threshold is applied.

@@ -27,16 +27,10 @@ for (let x = 0; x < 2; x++) {
 
   for (let y = 0; y < 2; y++) {
 
-    console.log(`${x} OR ${y} = ${result}`, test(x, y, result));
     or[0].values = [x, y];
     let result = lib.runner(or)[0];
+    console.log(`${x} OR ${y} = ${result}`);
 
   }
-
-}
-
-function test(x, y, result) {
-
-  return result === (x | y) ? 'PASS' : 'FAIL';
 
 }

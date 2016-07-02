@@ -22,12 +22,8 @@ not[1].activate = 'heaviside';
 
 for (let x = 0; x < 2; x++) {
 
-    console.log(`NOT ${x} = ${result}`, test(x, result));
-
-}
-
-function test(x, result) {
-
-  return (result !== x && (result === 1 || result === 0)) ? 'PASS' : 'FAIL';
+    not[0].values = [x];
+    let result = lib.runner(not)[0];
+    console.log(`NOT ${x} = ${result}`);
 
 }

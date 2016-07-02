@@ -1,7 +1,6 @@
-# golden-combat-park
-Genetic Algorithm
+# Artificial Neural Network (ANN)
 
-A project of curiosity learning about genetic algorithms.
+A project of curiosity learning about artificial neural networks.
 
 # API
 
@@ -87,7 +86,7 @@ A layer represents ... a layer. Each node within the layer has a weight that is 
   values: [nodeCount],
   weights: [nodeCount][nextNodeCount],
   biases: [nodeCount],
-  activation: 'htan|softmax'
+  activation: 'htan|softmax|sigmoid|heviside'
 }
 ```
 - values: Represents the values coming into the layer.
@@ -96,3 +95,6 @@ A layer represents ... a layer. Each node within the layer has a weight that is 
 - activation: The function applied to each value in the layer after the previous layer has applied its bias and weights. (The first layer does not get activated.)
   - softmax: The softmax function is applied to all values as a whole. (Typically for the last layer.)
   - htan: The Hyperbolic Tangent is applied to each individual value. (Typically for all layers except the last)
+  - heaviside: Applied to individual values.
+  - sigmoide: Applied to individual values.
+  - [empty]: No threshold is applied. 

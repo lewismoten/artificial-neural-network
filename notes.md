@@ -34,19 +34,36 @@ The hidden layer is similar to the methodology of black boxes. We don't see what
 
 ## Anatomy of a Neuron
 
+
+### Anatomy of a Biological Neuron
 | Term | Description |
 | --- | --- |
-| Synapse | The action of a neuron receiving a value. |
-| Dendrites | The input paths (weights) from other neurons |
-| Output | If enough information was received from Synapses, the axon transmits a signal |
-| Axon | The output signal to the next layers synapses. |
-| Signal | Information received. (ie. Input value * weight) |
+| Output | If enough information was received, the neuron transmits a signal |
 | Bias | Each neuron has bias that it applies to the transfer function. It is often represented as the neuron itself. |
 | Weight | A weight is multiplied against the value of the neuron it came from, and is specific to the neuron that it is going to. It is often represented as a line connecting two neurons. |
-| Threshold | A value to target to map a number into a binary result  |
+| Threshold | A value to target to pass a value to the next set of neurons |
 | Perceptron | Maps values from the previous layer into a binary value |
 | Transfer Function | Sums weights and values from the previous layer |
 | Activation | Applies bias to its input and performs a calculation |
+
+### Anatomy of an Artificial Neuron
+| Term | Description |
+| --- | --- |
+| Synapse | The action of a neuron receiving a value. |
+| Resting Potential | The state when voltage-gated ion channels are closed |
+| Dendrites | The input paths (weights) from other neurons |
+| Axon | The output signal to the next layers synapses. |
+| Signal | Information received. (ie. Input value * weight) |
+| Threshold | See voltage-gated channels  |
+| Plasma membrane | The outer layer of a neuron cell |
+| Voltage-gated ion channel | The gate from which a neuron fires |
+| Action Potential (AP) | A signal emitted by the neuron. |
+| Nerve Impulse | See Action Potential |
+| Spike | See Action Potential |
+| Spike Train | Temporal sequence of action potentials as a result of a spike |
+| Fire | The act of a neuron emitting an action potential |
+
+### Comparison between a Biological and Artificial Neuron
 
 ### A Neuron in action
 
@@ -97,33 +114,23 @@ You will first need to map your data for the input values. Each neuron can accep
 - Features
 - Weight Matrix
 - Fuzzy Logic
-- XOR as a neural net - confirm the following...
+- conciousness
+- Refactory period - impossible to receive/transmit signal
 
-```javascript
-// xor as neural net
-[
-  // input layer (2 nodes)
-  [
-    x, // 0 or 1
-    y  // 0 or 1
-  ]
-  // weights
-  [
-    [1, 1],
-    [1, 1]
-  ],
-  // hidden (2 nodes)
-  // layer bias
-  [
-    0, // OR
-    -1 // AND
-  ],
-  // weights
-  [
-    3, -2
-  ],
-  // ouput layer bias
-  [-2]
-
-]
-```
+# Things that could affect processing
+- Does a neuron fire immediately when the threshold is met?
+- Is the timespan for a signal fired always the same?
+- Does relative location cause a delay in signals?
+- Does a neurons signal taper off, or is it instant on/off?
+- Once a threshold is met, is it then lowered due to an inertia-like effect - increasing the output signal?
+- Is the signal a constant on/off, or does it "travel" or "pulse"?
+- Can a neuron connect to itself?
+- What happens when a neuron is created, ages, injury, degredation, dies?
+- How often does a neuron change witch neurons it connects to?
+- How often does a neuron change where it is connected?
+- Does the number of neurons connected to one neuron affect the signal strength?
+  - Do neurons further away get less of a signal, or any at all if the signal was weak to begin with?
+  - If a neuron along the path is in a refactory period, is signal along the path affected?
+- Can a neurons axon connect to another neurons axon, increasing the signal along a path?
+- Can an axon also receive a signal?
+- What happens if the neurons signal is so strong, the axon is not capable of transmitting the full value?

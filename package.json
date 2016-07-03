@@ -39,7 +39,7 @@
     "jasmine": "^2.4.1"
   },
   "dependencies": {
-    "array-walker": "^1.0.0",
+    "array-walker": "^1.1.0",
     "heaviside": "^1.0.1",
     "htan": "0.0.3",
     "inda": "^1.0.0",

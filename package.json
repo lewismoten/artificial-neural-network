@@ -43,6 +43,7 @@
     "heaviside": "^1.0.1",
     "htan": "0.0.3",
     "inda": "^1.0.0",
+    "is-undefined": "^1.0.2",
     "sigmoid": "0.0.1",
     "softmax-fn": "^1.0.8"
   }

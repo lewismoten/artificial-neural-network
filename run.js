@@ -16,15 +16,6 @@ let activation = 'heaviside',
     new lib.Link(hiddenAnd, outputXor, -1)
 ];
 
-// inputX.attach(hiddenOr, {weight: 2});
-// inputY.attach(hiddenOr, {weight: 2});
-//
-// inputX.attach(hiddenAnd, {weight: 1});
-// inputY.attach(hiddenAnd, {weight: 1});
-//
-// hiddenOr.attach(outputXor, {weight: 1});
-// hiddenAnd.attach(outputXor, {weight: -1});
-
 // layers are just sequential batch orders. neurons can appear in multiple layers, and feed forward/backward.
 let definition = {
   layers: [
@@ -68,41 +59,32 @@ let network = {
   ]
 };
 
-for (let x = 0; x < 2; x++) {
+let save = lib.serialize(network);
+console.log('saved', JSON.stringify(save, null, ' '));
 
-  for (let y = 0; y < 2; y++) {
-
-    console.log('------------------ [ new calculation ] ------------------');
-
-    inputX.value = x;
-    inputY.value = y;
-
-    network.layers.forEach(layer => {
-
-      console.log(`${layer.name}:`);
-
-      layer.neurons.forEach(neuron => {
-
-        let output = neuron.process();
-
-        console.log(`\t${neuron.name}: ${output}`);
-
-      });
-
-    });
-
-    // hiddenOr.process();
-    // console.log(`\tOR = ${hiddenOr.output}`);
-    // //console.log(`${hiddenOr}`);
-    //
-    // hiddenAnd.process();
-    // console.log(`\tAND = ${hiddenAnd.output}`);
-    //
-    // outputXor.process();
-  //console.log(`\tXOR = ${outputXor.output}\n`);
-
-    //console.log(`a neuron ${hiddenOr}`);
-
-  }
-
-}
+// for (let x = 0; x < 2; x++) {
+//
+//   for (let y = 0; y < 2; y++) {
+//
+//     console.log('------------------ [ new calculation ] ------------------');
+//
+//     inputX.value = x;
+//     inputY.value = y;
+//
+//     network.layers.forEach(layer => {
+//
+//       console.log(`${layer.name}:`);
+//
+//       layer.neurons.forEach(neuron => {
+//
+//         let output = neuron.process();
+//
+//         console.log(`\t${neuron.name}: ${output}`);
+//
+//       });
+//
+//     });
+//
+//   }
+//
+// }

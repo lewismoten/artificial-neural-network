@@ -1,0 +1,94 @@
+{
+ "layers": [
+  {
+   "name": "input",
+   "neurons": [
+    "c9ebcb21-0cc8-47cc-8a02-9d7b780a12c9",
+    "1c8e926f-f9e8-4ec4-be98-34e614996e1d"
+   ]
+  },
+  {
+   "name": "hidden",
+   "neurons": [
+    "3a95d083-48c8-4264-a848-0c9402b26093",
+    "76994fb7-8f87-4f2c-814b-dcb7f76b7e7b"
+   ]
+  },
+  {
+   "name": "output",
+   "neurons": [
+    "b2ee82c1-29e5-4c98-992e-76f3f78e1519"
+   ]
+  }
+ ],
+ "neurons": [
+  {
+   "id": "c9ebcb21-0cc8-47cc-8a02-9d7b780a12c9",
+   "name": "X",
+   "bias": 0,
+   "activation": "value"
+  },
+  {
+   "id": "1c8e926f-f9e8-4ec4-be98-34e614996e1d",
+   "name": "Y",
+   "bias": 0,
+   "activation": "value"
+  },
+  {
+   "id": "3a95d083-48c8-4264-a848-0c9402b26093",
+   "name": "OR",
+   "bias": -0.99999,
+   "activation": "heaviside"
+  },
+  {
+   "id": "76994fb7-8f87-4f2c-814b-dcb7f76b7e7b",
+   "name": "AND",
+   "bias": -1.00001,
+   "activation": "heaviside"
+  },
+  {
+   "id": "b2ee82c1-29e5-4c98-992e-76f3f78e1519",
+   "name": "XOR",
+   "bias": -0.5,
+   "activation": "heaviside"
+  }
+ ],
+ "links": [
+  {
+   "id": "5806b4e7-d54f-497c-8332-e1b9018f3a1e",
+   "weight": 2,
+   "source": "c9ebcb21-0cc8-47cc-8a02-9d7b780a12c9",
+   "target": "3a95d083-48c8-4264-a848-0c9402b26093"
+  },
+  {
+   "id": "7e91a330-8fed-42c1-a155-ce7c1f901fe9",
+   "weight": 2,
+   "source": "1c8e926f-f9e8-4ec4-be98-34e614996e1d",
+   "target": "3a95d083-48c8-4264-a848-0c9402b26093"
+  },
+  {
+   "id": "974e33e5-868e-484f-a07e-7367c9863578",
+   "weight": 1,
+   "source": "c9ebcb21-0cc8-47cc-8a02-9d7b780a12c9",
+   "target": "76994fb7-8f87-4f2c-814b-dcb7f76b7e7b"
+  },
+  {
+   "id": "74350c99-4fea-459b-8ffe-76821250019b",
+   "weight": 1,
+   "source": "1c8e926f-f9e8-4ec4-be98-34e614996e1d",
+   "target": "76994fb7-8f87-4f2c-814b-dcb7f76b7e7b"
+  },
+  {
+   "id": "c3786998-dbdc-4161-b76f-8eb0187d3aaa",
+   "weight": 1,
+   "source": "3a95d083-48c8-4264-a848-0c9402b26093",
+   "target": "b2ee82c1-29e5-4c98-992e-76f3f78e1519"
+  },
+  {
+   "id": "7bf84807-82b7-4e5e-8eb1-7dc49dc52024",
+   "weight": -1,
+   "source": "76994fb7-8f87-4f2c-814b-dcb7f76b7e7b",
+   "target": "b2ee82c1-29e5-4c98-992e-76f3f78e1519"
+  }
+ ]
+}

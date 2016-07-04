@@ -30,9 +30,14 @@ const lib = require('./lib');
 // console.log('same copy', output.join(',') === output2.join(','))
 
 let htan = require('htan');
-let neuron1 = new lib.neuron(1, htan);
-let neuron2 = new lib.neuron(2, htan);
-let neuron3 = new lib.neuron(3, htan);
+let neuron1 = new lib.neuron(1, 'htan');
+let neuron2 = new lib.neuron(2, 'htan');
+let neuron3 = new lib.neuron(3, 'htan');
+let activators = {
+  htan: htan
+};
+
+global.activators = activators;
 
 neuron1.attach(neuron3, {weight: 0.12});
 neuron2.attach(neuron3, {weight: 0.03});
@@ -40,6 +45,6 @@ neuron2.attach(neuron3, {weight: 0.03});
 //console.log(`a neuron ${neuron}`, neuron);
 neuron1.value = 1;
 neuron2.value = 2;
-neuron3.process();
+neuron3.process(activators);
 
 console.log(`a neuron ${neuron3}`);

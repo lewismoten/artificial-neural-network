@@ -37,9 +37,6 @@ let neuron1 = new lib.neuron(1, 'htan', 'fred');
 let neuron2 = new lib.neuron(2, 'htan');
 let neuron3 = new lib.neuron(3, 'htan');
 
-
-global.activators = activators;
-
 neuron1.attach(neuron3, {weight: 0.12});
 neuron2.attach(neuron3, {weight: 0.03});
 

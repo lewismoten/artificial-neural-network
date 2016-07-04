@@ -1,48 +1,42 @@
 
 const lib = require('./lib');
 
-// let xor = lib.create(2, 2, 1),
-//   LearningRate = 0.03,
-//   momentum = 0.1,
-//   input = [1, 1],
-//   expectedOutput = [1];
-//
-// xor[0].weights = [
-//   [2, -2],
-//   [2, -2]
-// ];
-// xor[1].biases = [-1, 3];
-// xor[1].weights = [
-//   [2],
-//   [2]
-// ];
-// xor[2].biases = [-3];
-// xor[1].activate = 'htan';
-// xor[2].activate = 'heaviside';
-//
-// xor[0].values = input;
-// let result = lib.runner(xor)[0];
-// lib.learn(xor, expectedOutput, LearningRate, momentum);
+let activation = 'heaviside',
+  inputX = new lib.Neuron(0, 'value', 'X'),
+  inputY = new lib.Neuron(0, 'value', 'Y'),
+  hiddenOr = new lib.Neuron(-0.99999, activation, 'OR'),
+  hiddenAnd = new lib.Neuron(-1.00001, activation, 'AND'),
+  outputXor = new lib.Neuron(-0.5, activation, 'XOR');
 
-// console.log(JSON.stringify(network, null, ' '));
-// console.log('result', JSON.stringify(output));
-//
-// console.log('same copy', output.join(',') === output2.join(','))
+inputX.attach(hiddenOr, {weight: 2});
+inputY.attach(hiddenOr, {weight: 2});
 
-let activators = require('./lib/activators');
-let htan = require('htan');
-activators.register('htan', htan);
+inputX.attach(hiddenAnd, {weight: 1});
+inputY.attach(hiddenAnd, {weight: 1});
 
-let neuron1 = new lib.neuron(1, 'htan', 'fred');
-let neuron2 = new lib.neuron(2, 'htan');
-let neuron3 = new lib.neuron(3, 'htan');
+hiddenOr.attach(outputXor, {weight: 1});
+hiddenAnd.attach(outputXor, {weight: -1});
 
-neuron1.attach(neuron3, {weight: 0.12});
-neuron2.attach(neuron3, {weight: 0.03});
+for (let x = 0; x < 2; x++) {
 
-//console.log(`a neuron ${neuron}`, neuron);
-neuron1.value = 1;
-neuron2.value = 2;
-neuron3.process(activators);
+  for (let y = 0; y < 2; y++) {
 
-console.log(`a neuron ${neuron3}`);
+    inputX.value = x;
+    inputY.value = y;
+
+    console.log(`inputs [${x}, ${y}]`);
+
+    hiddenOr.process();
+    console.log(`\tOR = ${hiddenOr.output}`);
+
+    hiddenAnd.process();
+    console.log(`\tAND = ${hiddenAnd.output}`);
+
+    outputXor.process();
+    console.log(`\tXOR = ${outputXor.output}\n`);
+
+    console.log(`a neuron ${outputXor}`);
+
+  }
+
+}

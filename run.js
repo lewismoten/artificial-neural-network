@@ -17,6 +17,32 @@ inputY.attach(hiddenAnd, {weight: 1});
 hiddenOr.attach(outputXor, {weight: 1});
 hiddenAnd.attach(outputXor, {weight: -1});
 
+// layers are just sequential batch orders. neurons can appear in multiple layers, and feed forward/backward. 
+let definition = {
+  layers: [
+    {
+      name: 'input',
+      neurons: [
+        inputX.id,
+        inputY.id
+      ]
+    },
+    {
+      name: 'hidden',
+      neurons: [
+        hiddenOr.id,
+        hiddenAnd.id
+      ]
+    },
+    {
+      name: 'ourput',
+      neurons: [
+        outputXor.id
+      ]
+    }
+  ]
+}
+
 let network = {
   layers: [
     {

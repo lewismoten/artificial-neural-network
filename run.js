@@ -1,68 +1,25 @@
 
 const lib = require('./lib');
 
-// let activation = 'heaviside',
-//   inputX = new lib.Neuron(0, 'value', 'X'),
-//   inputY = new lib.Neuron(0, 'value', 'Y'),
-//   hiddenOr = new lib.Neuron(-0.99999, activation, 'OR'),
-//   hiddenAnd = new lib.Neuron(-1.00001, activation, 'AND'),
-//   outputXor = new lib.Neuron(-0.5, activation, 'XOR'),
-//   links = [
-//     new lib.Link(inputX, hiddenOr, 2),
-//     new lib.Link(inputY, hiddenOr, 2),
-//     new lib.Link(inputX, hiddenAnd, 1),
-//     new lib.Link(inputY, hiddenAnd, 1),
-//     new lib.Link(hiddenOr, outputXor, 1),
-//     new lib.Link(hiddenAnd, outputXor, -1)
-// ];
-
-// layers are just sequential batch orders. neurons can appear in multiple layers, and feed forward/backward.
-// let definition = {
-//   layers: [
-//     {
-//       name: 'input',
-//       neurons: [
-//         inputX.id,
-//         inputY.id
-//       ]
-//     },
-//     {
-//       name: 'hidden',
-//       neurons: [
-//         hiddenOr.id,
-//         hiddenAnd.id
-//       ]
-//     },
-//     {
-//       name: 'ourput',
-//       neurons: [
-//         outputXor.id
-//       ]
-//     }
-//   ]
-// }
+// TODO:
+// build network that can quickly setup a new network
+// let network = new lib.Network(3, 4, 2);
+// let output = network.process(0, 1);
 //
-// let network = {
-//   layers: [
-//     {
-//       name:    'input',
-//       neurons: [inputX, inputY]
-//     },
-//     {
-//       name:    'hidden',
-//       neurons: [hiddenOr, hiddenAnd]
-//     },
-//     {
-//       name:    'output',
-//       neurons: [outputXor]
-//     }
-//   ]
-// };
+// same for layer
+// layer = new lib.Layer()
+// layer.process();
 //
-// let save = lib.serialize(network);
+// back-propagation
+//
 
 let save = require('./examples/xor.json');
-network = lib.deserialize(save);
+let network =
+  lib.deserialize(
+    lib.serialize(
+      lib.deserialize(save)
+    )
+  );
 //console.log('saved', JSON.stringify(save, null, ' '));
 
 for (let x = 0; x < 2; x++) {

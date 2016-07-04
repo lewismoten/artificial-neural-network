@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "array-walker": "^1.1.0",
+    "get-key-or-default": "^1.0.0",
     "heaviside": "^1.0.1",
     "htan": "0.0.3",
     "inda": "^1.0.0",

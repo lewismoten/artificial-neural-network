@@ -17,6 +17,23 @@ inputY.attach(hiddenAnd, {weight: 1});
 hiddenOr.attach(outputXor, {weight: 1});
 hiddenAnd.attach(outputXor, {weight: -1});
 
+let network = {
+  layers: [
+    {
+      name:    'input',
+      neurons: [inputX, inputY]
+    },
+    {
+      name:    'hidden',
+      neurons: [hiddenOr, hiddenAnd]
+    },
+    {
+      name:    'output',
+      neurons: [outputXor]
+    }
+  ]
+};
+
 for (let x = 0; x < 2; x++) {
 
   for (let y = 0; y < 2; y++) {
@@ -24,17 +41,27 @@ for (let x = 0; x < 2; x++) {
     inputX.value = x;
     inputY.value = y;
 
-    console.log(`inputs [${x}, ${y}]`);
+    network.layers.forEach(layer => {
 
-    hiddenOr.process();
-    console.log(`\tOR = ${hiddenOr.output}`);
-    //console.log(`${hiddenOr}`);
+      console.log(`${layer.name}:`);
 
-    hiddenAnd.process();
-    console.log(`\tAND = ${hiddenAnd.output}`);
+      layer.neurons.forEach(neuron => {
 
-    outputXor.process();
-    console.log(`\tXOR = ${outputXor.output}\n`);
+        console.log(`\t${neuron.name}: ${neuron.process()}`);
+
+      });
+
+    });
+
+    // hiddenOr.process();
+    // console.log(`\tOR = ${hiddenOr.output}`);
+    // //console.log(`${hiddenOr}`);
+    //
+    // hiddenAnd.process();
+    // console.log(`\tAND = ${hiddenAnd.output}`);
+    //
+    // outputXor.process();
+    // console.log(`\tXOR = ${outputXor.output}\n`);
 
   //  console.log(`a neuron ${outputXor}`);
 

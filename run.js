@@ -28,6 +28,7 @@ for (let x = 0; x < 2; x++) {
 
     hiddenOr.process();
     console.log(`\tOR = ${hiddenOr.output}`);
+    //console.log(`${hiddenOr}`);
 
     hiddenAnd.process();
     console.log(`\tAND = ${hiddenAnd.output}`);
@@ -35,7 +36,7 @@ for (let x = 0; x < 2; x++) {
     outputXor.process();
     console.log(`\tXOR = ${outputXor.output}\n`);
 
-    console.log(`a neuron ${outputXor}`);
+  //  console.log(`a neuron ${outputXor}`);
 
   }
 

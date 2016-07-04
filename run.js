@@ -29,13 +29,14 @@ const lib = require('./lib');
 //
 // console.log('same copy', output.join(',') === output2.join(','))
 
+let activators = require('./lib/activators');
 let htan = require('htan');
-let neuron1 = new lib.neuron(1, 'htan');
+activators.register('htan', htan);
+
+let neuron1 = new lib.neuron(1, 'htan', 'fred');
 let neuron2 = new lib.neuron(2, 'htan');
 let neuron3 = new lib.neuron(3, 'htan');
-let activators = {
-  htan: htan
-};
+
 
 global.activators = activators;
 

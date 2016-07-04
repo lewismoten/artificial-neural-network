@@ -45,6 +45,7 @@
     "inda": "^1.0.0",
     "is-undefined": "^1.0.2",
     "sigmoid": "0.0.1",
-    "softmax-fn": "^1.0.8"
+    "softmax-fn": "^1.0.8",
+    "uuid": "^2.0.2"
   }
 }

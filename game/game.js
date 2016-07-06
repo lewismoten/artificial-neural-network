@@ -16,6 +16,13 @@
 
     }
 
+    get board() {
+
+      let multiplier = this.nextMark === 1 ? 1 : -1;
+      return this._grid.map(x => x * multiplier);
+
+    }
+
     markAt(x, y) {
 
       return this._grid[indexOf(x, y)];

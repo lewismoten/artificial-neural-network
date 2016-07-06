@@ -47,6 +47,7 @@
     "is-function": "^1.0.1",
     "is-undefined": "^1.0.2",
     "make-word": "^1.0.0",
+    "random-js": "^1.0.8",
     "sigmoid": "0.0.1",
     "softmax-fn": "^1.0.8",
     "uuid": "^2.0.2"

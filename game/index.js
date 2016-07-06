@@ -4,24 +4,44 @@
 
   let Game = require('./game'),
     lib = require('../lib'),
-    game = new Game();
-
-  let networks = new Array(200)
+    game = new Game(),
+    networks = new Array(200)
     .fill(0)
-    .map(() => {
-      let ann = new lib.Network({layers: [9, 5, 2]});
+    .map(() => new lib.Network({layers: [9, 5, 2]}));
 
-      ann.wins = 0;
-      ann.draws = 0;
-      ann.losses = 0;
-      ann.cheats = 0;
-      ann.fitness = 0;
-      ann.games = 0;
+  // purely random
+  networks.push({name: 'ai-random', process: () => [Math.random(), Math.random()]});
+  // random open spot (no cheating)
+  networks.push({name: 'ai-random-open', process: (...spots) => {
+    let n = Math.floor(Math.random() * spots.filter(s => s === 0).length);
+    let index = spots.filter((s, i) => i === n);
+    let y = index % 3;
+    let x = (index - y) / index;
+    return [x, y];
+  }});
+  // first open spot
+  networks.push({name: 'ai-first-open', process: (...spots) => {
+    let index;
+    spots.find((s, i) => {index = i; i === 0});
+    let y = index % 3;
+    let x = (index - y) / index;
+    return [x, y];
+  }});
 
-      return ann;
+  // TODO: Add ai with full strategy
+  // TODO: Setup genetic algorithm
+  // TODO: Setup back propogation
 
-    }
-  );
+  networks.forEach(ann => {
+
+    ann.wins = 0;
+    ann.draws = 0;
+    ann.losses = 0;
+    ann.cheats = 0;
+    ann.fitness = 0;
+    ann.games = 0;
+
+  });
 
 
   // play each network against all others and itself.
@@ -54,7 +74,7 @@
       draws = Math.floor(1000 * (player.draws / count)) / 10,
       cheats = Math.floor(1000 * (player.cheats / count)) / 10;
 
-    console.log(`${name} FIT ${fit} WIN ${wins}% LOST: ${losses}% DRAW ${draws}% CHEATS: ${cheats}%`);
+    console.log(`${name} ${player.name || ''} FIT ${fit} WIN ${wins}% LOST: ${losses}% DRAW ${draws}% CHEATS: ${cheats}%`);
 
   }
 
@@ -168,11 +188,7 @@ function mapCell(value) {
 
   console.log(game.toString());
 
-  function ai2000() {
 
-    return Math.floor(Math.random() * 3);
-
-  }
 
 
 })();

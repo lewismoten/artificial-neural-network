@@ -4,10 +4,9 @@
 
   let Game = require('./game'),
     lib = require('../lib'),
-
     game = new Game();
 
-  let networks = new Array(100)
+  let networks = new Array(200)
     .fill(0)
     .map(() => {
       let ann = new lib.Network({layers: [9, 5, 2]});
@@ -17,6 +16,7 @@
       ann.losses = 0;
       ann.cheats = 0;
       ann.fitness = 0;
+      ann.games = 0;
 
       return ann;
 
@@ -26,6 +26,10 @@
 
   // play each network against all others and itself.
   // all networks will play each other twice - once as the first player, and as second player
+  //
+  // TODO: play against random (player 1 / player 2)
+  // TODO: play against non-losing strategy (player 1 / player 2)
+  // TODO: play against strategy - take first open
 
   networks.forEach(player1 => networks.forEach(player2 => {
 
@@ -39,13 +43,27 @@
   let best = networks.reduce((a, b) => a.fitness > b.fitness ? a : b);
   let worst = networks.reduce((a, b) => a.fitness < b.fitness ? a : b);
 
-  console.log(`best: FIT ${best.fitness} WIN ${best.wins} LOSS: ${best.losses} DRAW ${best.draws} CHEATS: ${best.cheats}`)
-  console.log(`worst: FIT ${worst.fitness} WIN ${worst.wins} LOSS: ${worst.losses} DRAW ${worst.draws} CHEATS: ${worst.cheats}`)
+  logStats('best', best);
+  logStats('worst', worst);
+
+  function logStats(name, player) {
+    let count = player.games,
+      fit = Math.floor(player.fitness * 10) / 10,
+      wins = Math.floor(1000 * (player.wins / count)) / 10,
+      losses = Math.floor(1000 * (player.losses / count)) / 10,
+      draws = Math.floor(1000 * (player.draws / count)) / 10,
+      cheats = Math.floor(1000 * (player.cheats / count)) / 10;
+
+    console.log(`${name} FIT ${fit} WIN ${wins}% LOST: ${losses}% DRAW ${draws}% CHEATS: ${cheats}%`);
+
+  }
 
 function calculateFitness(details, isPlayer1, player) {
 
   let fitness = (details.turns - 1) * 1,
     mark = isPlayer1 ? 1 : -1;
+
+  player.games++;
 
   if (details.hasEnded) {
 

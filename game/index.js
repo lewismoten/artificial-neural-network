@@ -2,30 +2,29 @@
 
   'use strict';
 
-  let Game = require('./game'),
+  let Game = require('octothorpe-xo'),
     lib = require('../lib'),
     game = new Game(),
     networks = new Array(200)
     .fill(0)
     .map(() => new lib.Network({layers: [9, 5, 2]}));
 
-  // purely random
   networks.push({name: 'ai-random', process: () => [Math.random(), Math.random()]});
-  // random open spot (no cheating)
+
   networks.push({name: 'ai-random-open', process: (...spots) => {
     let n = Math.floor(Math.random() * spots.filter(s => s === 0).length);
     let index = spots.filter((s, i) => i === n);
     let y = index % 3;
     let x = (index - y) / index;
-    return [x, y];
+    return [x + 1, y + 1];
   }});
-  // first open spot
+
   networks.push({name: 'ai-first-open', process: (...spots) => {
     let index;
     spots.find((s, i) => {index = i; i === 0});
     let y = index % 3;
     let x = (index - y) / index;
-    return [x, y];
+    return [x + 1, y + 1];
   }});
 
   // TODO: Add ai with full strategy
@@ -69,12 +68,12 @@
   function logStats(name, player) {
     let count = player.games,
       fit = Math.floor(player.fitness * 10) / 10,
-      wins = Math.floor(1000 * (player.wins / count)) / 10,
-      losses = Math.floor(1000 * (player.losses / count)) / 10,
-      draws = Math.floor(1000 * (player.draws / count)) / 10,
-      cheats = Math.floor(1000 * (player.cheats / count)) / 10;
+      wins = Math.floor(10000 * (player.wins / count)) / 100,
+      losses = Math.floor(10000 * (player.losses / count)) / 100,
+      draws = Math.floor(10000 * (player.draws / count)) / 100,
+      cheats = Math.floor(10000 * (player.cheats / count)) / 100;
 
-    console.log(`${name} ${player.name || ''} FIT ${fit} WIN ${wins}% LOST: ${losses}% DRAW ${draws}% CHEATS: ${cheats}%`);
+    console.log(`${name} ${player.name || ''} FIT ${player.fitness} WIN ${wins}% LOST: ${losses}% DRAW ${draws}% CHEATS: ${cheats}%`);
 
   }
 
@@ -148,14 +147,14 @@ function runGame(player1, player2) {
       x = move.x,
       y = move.y;
 
-    if (!game.isAvailable(x, y)) {
+    if (!game.canMark(x, y)) {
 
       // Cheater!
       break;
 
     }
 
-    game.take(x, y);
+    game.mark(x, y);
 
   }
 
@@ -163,9 +162,39 @@ function runGame(player1, player2) {
 
 }
 
+function mapGame() {
+
+  let results = [];
+  for (let y = 1; y < 4; y++) {
+
+    for (let x = 1; x < 4; x++) {
+
+      let value = game.markAt(x, y);
+      if (value === game.nextMark) {
+
+        results.push(1);
+
+      } else if (value === ' ') {
+
+        results.push(0);
+
+      } else {
+
+        results.push(-1);
+
+      }
+
+    }
+
+  }
+
+  return results;
+
+}
+
 function getMove(player) {
 
-  let output = player.process(...game.board);
+  let output = player.process(...mapGame());
   return {
     x: mapCell(output[0]),
     y: mapCell(output[1])
@@ -177,11 +206,11 @@ function mapCell(value) {
 
   if (value < 1 / 3) {
 
-    return 0;
+    return 1;
 
   }
 
-  return value < 2 / 3 ? 1 : 2;
+  return value < 2 / 3 ? 2 : 3;
 
 }
 

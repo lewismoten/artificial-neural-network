@@ -36,7 +36,8 @@
     "gulp-sourcemaps": "^2.0.0-alpha",
     "gulp-uglify": "^1.5.3",
     "istanbul": "^0.4.3",
-    "jasmine": "^2.4.1"
+    "jasmine": "^2.4.1",
+    "observer-subject": "^1.1.1"
   },
   "dependencies": {
     "array-walker": "^1.1.0",
@@ -47,6 +48,7 @@
     "is-function": "^1.0.1",
     "is-undefined": "^1.0.2",
     "make-word": "^1.0.0",
+    "observer-subject": "^1.1.1",
     "octothorpe-xo": "^1.0.0",
     "random-js": "^1.0.8",
     "sigmoid": "0.0.1",

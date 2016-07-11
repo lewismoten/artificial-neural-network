@@ -4,32 +4,14 @@
 
   let Game = require('octothorpe-xo'),
     lib = require('../lib'),
-    game = new Game(),
     networks = new Array(200)
-    .fill(0)
-    .map(() => new lib.Network({layers: [9, 5, 2]}));
+      .fill(0)
+      .map(() => new lib.Network({layers: [9, 5, 9]}));
 
-  networks.push({name: 'ai-random', process: () => [Math.random(), Math.random()]});
-
-  networks.push({name: 'ai-random-open', process: (...spots) => {
-    let n = Math.floor(Math.random() * spots.filter(s => s === 0).length);
-    let index = spots.filter((s, i) => i === n);
-    let y = index % 3;
-    let x = (index - y) / index;
-    return [x + 1, y + 1];
-  }});
-
-  networks.push({name: 'ai-first-open', process: (...spots) => {
-    let index;
-    spots.find((s, i) => {index = i; i === 0});
-    let y = index % 3;
-    let x = (index - y) / index;
-    return [x + 1, y + 1];
-  }});
-
-  // TODO: Add ai with full strategy
-  // TODO: Setup genetic algorithm
-  // TODO: Setup back propogation
+  networks.push(require('./ai-random'));
+  networks.push(require('./ai-random-open'));
+  networks.push(require('./ai-first-open'));
+  networks.push(require('./ai-unbeatable'));
 
   networks.forEach(ann => {
 
@@ -42,21 +24,16 @@
 
   });
 
-
-  // play each network against all others and itself.
-  // all networks will play each other twice - once as the first player, and as second player
-  //
-  // TODO: play against random (player 1 / player 2)
-  // TODO: play against non-losing strategy (player 1 / player 2)
-  // TODO: play against strategy - take first open
-
+  let details;
   networks.forEach(player1 => networks.forEach(player2 => {
 
-    let details = runGame(player1, player2);
+    details = runGame(player1, player2);
     calculateFitness(details, true, player1);
     calculateFitness(details, false, player2);
 
   }));
+
+  console.log(details.toString());
 
   // best
   let best = networks.reduce((a, b) => a.fitness > b.fitness ? a : b);
@@ -67,19 +44,24 @@
 
   function logStats(name, player) {
     let count = player.games,
-      fit = Math.floor(player.fitness * 10) / 10,
-      wins = Math.floor(10000 * (player.wins / count)) / 100,
-      losses = Math.floor(10000 * (player.losses / count)) / 100,
-      draws = Math.floor(10000 * (player.draws / count)) / 100,
-      cheats = Math.floor(10000 * (player.cheats / count)) / 100;
+      fit = player.fitness,
+      wins = getPercent(player.wins / count),
+      losses = getPercent(player.losses / count),
+      draws = getPercent(player.draws / count),
+      cheats = getPercent(player.cheats / count);
 
-    console.log(`${name} ${player.name || ''} FIT ${player.fitness} WIN ${wins}% LOST: ${losses}% DRAW ${draws}% CHEATS: ${cheats}%`);
+    console.log(`${name} ${player.name || ''} FIT ${player.fitness} WIN ${wins} LOST: ${losses} DRAW ${draws} CHEATS: ${cheats}`);
 
   }
+function getPercent(value) {
+
+  return `${Math.floor(1000 * value) / 100}%`;
+
+}
 
 function calculateFitness(details, isPlayer1, player) {
 
-  let fitness = (details.turns - 1) * 1,
+  let fitness = (details.turn - 1) * 1,
     mark = isPlayer1 ? 1 : -1;
 
   player.games++;
@@ -89,16 +71,16 @@ function calculateFitness(details, isPlayer1, player) {
     if (details.winner === mark) {
 
       player.wins++;
-      fitness += 2;
+      fitness += 5;
 
       // winning in less turns is better
-      if (details.turns <= 8) {
+      if (details.turn <= 8) {
 
         fitness++;
 
       }
 
-      if (details.turns <= 6) {
+      if (details.turn <= 6) {
 
         fitness += 2;
 
@@ -140,10 +122,12 @@ function calculateFitness(details, isPlayer1, player) {
 
 function runGame(player1, player2) {
 
+  let game = new Game();
+
   while (!game.hasEnded) {
 
     let player = game.nextMark === 1 ? player1 : player2,
-      move = getMove(player),
+      move = getMove(game, player),
       x = move.x,
       y = move.y;
 
@@ -162,27 +146,16 @@ function runGame(player1, player2) {
 
 }
 
-function mapGame() {
+function getInputs(game) {
 
   let results = [];
   for (let y = 1; y < 4; y++) {
 
     for (let x = 1; x < 4; x++) {
 
-      let value = game.markAt(x, y);
-      if (value === game.nextMark) {
-
-        results.push(1);
-
-      } else if (value === ' ') {
-
-        results.push(0);
-
-      } else {
-
-        results.push(-1);
-
-      }
+      results.push(
+        getInput(game, x, y)
+      );
 
     }
 
@@ -192,32 +165,52 @@ function mapGame() {
 
 }
 
-function getMove(player) {
+function getInput(game, x, y) {
 
-  let output = player.process(...mapGame());
-  return {
-    x: mapCell(output[0]),
-    y: mapCell(output[1])
-  };
+  if (game.canMark(x, y)) {
 
-}
+    // unmarked
+    return 0;
 
-function mapCell(value) {
+  } else if (game.markAt(x, y) === game.nextMark) {
 
-  if (value < 1 / 3) {
-
+    // my mark
     return 1;
 
   }
 
-  return value < 2 / 3 ? 2 : 3;
+  // opponent mark
+  return -1;
 
 }
 
+function getMove(game, player) {
 
-  console.log(game.toString());
+  let outputs = player.process(...getInputs(game)),
+    index = getMaxValueIndex(outputs);
 
+  return mapIndexTo2d(3, index);
 
+}
 
+function mapIndexTo2d(width, index) {
+
+  let x = index % width,
+    y = (index - x) / width;
+  return {x: x, y: y};
+
+}
+
+function getMaxValueIndex(items) {
+
+  let s = items.reduce((max, item, i) => {
+
+    return item > items[max] ? i : max;
+
+  }, 0);
+
+  return s;
+
+}
 
 })();

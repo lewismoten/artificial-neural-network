@@ -4,121 +4,48 @@
 
   let Game = require('octothorpe-xo'),
     lib = require('../lib'),
-    networks = new Array(200)
+    elo = require('./elo.js');
+
+  main();
+
+  function main() {
+
+    let networks = new Array(200)
       .fill(0)
-      .map(() => new lib.Network({layers: [9, 5, 9]}));
+      .map(() => new lib.Network({layers: [9, 5, 9]})),
+    details;
 
-  networks.push(require('./ai-random'));
-  networks.push(require('./ai-random-open'));
-  networks.push(require('./ai-first-open'));
-  networks.push(require('./ai-unbeatable'));
 
-  networks.forEach(ann => {
+      networks.push(require('./ai-random'));
+      networks.push(require('./ai-random-open'));
+      networks.push(require('./ai-first-open'));
+      networks.push(require('./ai-unbeatable'));
 
-    ann.wins = 0;
-    ann.draws = 0;
-    ann.losses = 0;
-    ann.cheats = 0;
-    ann.fitness = 0;
-    ann.games = 0;
+      networks.forEach(ann => {
 
-  });
+        ann.rank = 0;
 
-  let details;
-  networks.forEach(player1 => networks.forEach(player2 => {
+      });
 
-    details = runGame(player1, player2);
-    calculateFitness(details, true, player1);
-    calculateFitness(details, false, player2);
+      networks.forEach(player1 => networks.forEach(player2 => {
 
-  }));
+        let winner,
+          ranks;
 
-  console.log(details.toString());
+        details = runGame(player1, player2);
 
-  // best
-  let best = networks.reduce((a, b) => a.fitness > b.fitness ? a : b);
-  let worst = networks.reduce((a, b) => a.fitness < b.fitness ? a : b);
+        winner = getWinner(details);
+        ranks = elo(player1.rank, player2.rank, winner);
 
-  logStats('best', best);
-  logStats('worst', worst);
+        // update rank
+        player1.rank = ranks[0];
+        player2.rank = ranks[1];
 
-  function logStats(name, player) {
-    let count = player.games,
-      fit = player.fitness,
-      wins = getPercent(player.wins / count),
-      losses = getPercent(player.losses / count),
-      draws = getPercent(player.draws / count),
-      cheats = getPercent(player.cheats / count);
+      }));
 
-    console.log(`${name} ${player.name || ''} FIT ${player.fitness} WIN ${wins} LOST: ${losses} DRAW ${draws} CHEATS: ${cheats}`);
+      displayResults(networks);
 
   }
-function getPercent(value) {
-
-  return `${Math.floor(1000 * value) / 100}%`;
-
-}
-
-function calculateFitness(details, isPlayer1, player) {
-
-  let fitness = (details.turn - 1) * 1,
-    mark = isPlayer1 ? 1 : -1;
-
-  player.games++;
-
-  if (details.hasEnded) {
-
-    if (details.winner === mark) {
-
-      player.wins++;
-      fitness += 5;
-
-      // winning in less turns is better
-      if (details.turn <= 8) {
-
-        fitness++;
-
-      }
-
-      if (details.turn <= 6) {
-
-        fitness += 2;
-
-      }
-
-
-    } else if (details.winner === 0) {
-
-      // draw
-      player.draws++;
-      fitness++;
-
-    } else {
-
-      player.losses++;
-      fitness--;
-
-    }
-
-
-  } else if (details.nextMark === mark) {
-
-    // cheater!
-    player.cheats++;
-    fitness -= 3;
-
-  }
-
-  if (fitness < 0) {
-
-    fitness = 0;
-
-  }
-
-  fitness /= 13;
-  player.fitness += fitness;
-
-}
 
 function runGame(player1, player2) {
 
@@ -134,6 +61,7 @@ function runGame(player1, player2) {
     if (!game.canMark(x, y)) {
 
       // Cheater!
+      // We must break or the same player may make the same choice!
       break;
 
     }
@@ -212,5 +140,61 @@ function getMaxValueIndex(items) {
   return s;
 
 }
+
+  function getWinner(game) {
+
+    // determine outcome scores
+    if (game.hasEnded) {
+
+      switch (game.winner) {
+        case 1:
+        case 2:
+          return game.winner;
+        default:
+          return 0;
+      }
+
+    }
+
+    // someone has cheated!
+    return game.nextMark === 1 ? 2 : 1;
+
+  }
+
+  function compareRanks(a, b) {
+
+    if (a.rank < b.rank) {
+
+      return -1;
+
+    } else if (a.rank === b.rank) {
+
+      return 0;
+
+    }
+
+    return 1;
+
+  }
+
+  function displayResults(networks) {
+
+    networks.sort(compareRanks);
+    networks.filter(isEdge).map(showOff);
+
+  }
+
+  function showOff(network) {
+
+    console.log(network.rank, network.name);
+
+  }
+
+  function isEdge(v, i, a) {
+
+    // only the 3 worst and 3 best
+    return i < 3 || i > a.length - 4;
+
+  }
 
 })();

@@ -1,3 +1,5 @@
+![artificial-neural-network: Small JavaScript neural network](docs/images/social-preview.png)
+
 # Artificial Neural Network (ANN)
 
 A project of curiosity learning about artificial neural networks.
